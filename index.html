@@ -1,352 +1,317 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2575.7">
-  <style type="text/css">
-    body {background-color: #ecf6ff}
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #6d6d6d; -webkit-text-stroke: #6d6d6d}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #6b0001; -webkit-text-stroke: #6b0001}
-    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #fb0007; -webkit-text-stroke: #fb0007}
-    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #0000ff; -webkit-text-stroke: #0000ff}
-    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; -webkit-text-stroke: #000000}
-    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #093c94; -webkit-text-stroke: #093c94}
-    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; -webkit-text-stroke: #000000; min-height: 14.0px}
-    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #900112; -webkit-text-stroke: #900112}
-    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Menlo; color: #0f7001; -webkit-text-stroke: #0f7001}
-    span.s1 {font-kerning: none; background-color: #fffffe}
-    span.s2 {font-kerning: none; color: #fb0007; background-color: #fffffe; -webkit-text-stroke: 0px #fb0007}
-    span.s3 {font-kerning: none; color: #2a2a2a; background-color: #fffffe; -webkit-text-stroke: 0px #2a2a2a}
-    span.s4 {font-kerning: none; color: #000000; background-color: #fffffe; -webkit-text-stroke: 0px #000000}
-    span.s5 {font-kerning: none; color: #0000ff; background-color: #fffffe; -webkit-text-stroke: 0px #0000ff}
-    span.s6 {font-kerning: none; color: #6b0001; background-color: #fffffe; -webkit-text-stroke: 0px #6b0001}
-    span.s7 {font-kerning: none; color: #137646; background-color: #fffffe; -webkit-text-stroke: 0px #137646}
-    span.s8 {font-kerning: none}
-    span.s9 {font-kerning: none; color: #093c94; background-color: #fffffe; -webkit-text-stroke: 0px #093c94}
-    span.s10 {font-kerning: none; color: #900112; background-color: #fffffe; -webkit-text-stroke: 0px #900112}
-    span.s11 {font-kerning: none; color: #0e6e6d; background-color: #fffffe; -webkit-text-stroke: 0px #0e6e6d}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noa's Good Point Jar</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        }
+
+        body {
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background: var(--bg-gradient);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Visible Snowflakes */
+        .snowflake {
+            position: absolute;
+            top: -10%;
+            color: white;
+            user-select: none;
+            z-index: 0;
+            pointer-events: none;
+            animation: fall linear infinite;
+            filter: drop-shadow(0 0 2px rgba(255,255,255,0.8));
+        }
+
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        h1 { 
+            color: #ffffff; 
+            margin-bottom: 5px; 
+            z-index: 10; 
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.5); 
+        }
+
+        #jar {
+            width: 300px;
+            height: 420px;
+            border: 6px solid #ffffff;
+            border-bottom-left-radius: 60px;
+            border-bottom-right-radius: 60px;
+            position: relative;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            display: flex;
+            flex-wrap: wrap-reverse;
+            align-content: flex-start;
+            padding: 15px;
+            z-index: 5;
+            overflow: visible;
+        }
+
+        .item {
+            width: 52px;
+            height: 52px;
+            margin: 3px;
+            cursor: pointer;
+            border-radius: 50%;
+            object-fit: cover;
+            animation: dropIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            border: 2px solid white;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+
+        @keyframes dropIn {
+            0% { transform: translateY(-500px) rotate(0deg); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .controls {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 3px solid white;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+        }
+
+        button:active { transform: scale(0.9); }
+        .plus { background-color: #4CAF50; }
+        .minus { background-color: #F44336; }
+
+        #counter {
+            color: white;
+            font-size: 24px;
+            margin-top: 10px;
+            font-weight: bold;
+            z-index: 10;
+            background: rgba(0,0,0,0.3);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
+        /* Overlays */
+        #overlay, #goal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .challenge-box {
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 22px;
+            border: 5px solid #FFD700;
+            max-width: 85%;
+        }
+
+        #overlay img, #goal-overlay img {
+            max-width: 90%;
+            max-height: 55%;
+            border-radius: 15px;
+            border: 4px solid white;
+        }
+
+        .close-btn {
+            margin-top: 20px;
+            padding: 15px 40px;
+            background: #FFD700;
+            color: #000;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 22px;
+        }
+
+        .particle { position: absolute; pointer-events: none; z-index: 15; font-size: 30px; }
+    </style>
 </head>
 <body>
-<p class="p1"><span class="s1">&lt;!DOCTYPE</span><span class="s2"> html</span><span class="s1">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">html</span><span class="s4"> </span><span class="s2">lang</span><span class="s3">=</span><span class="s5">"en"</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s1">charset</span><span class="s3">=</span><span class="s5">"UTF-8"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">meta</span><span class="s4"> </span><span class="s2">name</span><span class="s3">=</span><span class="s1">"viewport"</span><span class="s4"> </span><span class="s2">content</span><span class="s3">=</span><span class="s1">"width=device-width, initial-scale=1.0"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">title</span><span class="s3">&gt;</span><span class="s1">Noa's Good Point Jar</span><span class="s3">&lt;/</span><span class="s6">title</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">:root</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">--bg-gradient:</span><span class="s4"> </span><span class="s1">linear-gradient(</span><span class="s7">135deg</span><span class="s4">, </span><span class="s1">#1e3c72</span><span class="s4"> </span><span class="s7">0%</span><span class="s4">, </span><span class="s1">#2a5298</span><span class="s4"> </span><span class="s7">100%</span><span class="s1">)</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">body</span><span class="s1"> {</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">font-family:</span><span class="s4"> </span><span class="s1">'Arial Rounded MT Bold'</span><span class="s4">, </span><span class="s1">'Helvetica'</span><span class="s4">, </span><span class="s9">sans-serif</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s9">flex</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">flex-direction:</span><span class="s4"> </span><span class="s9">column</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s9">center</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s9">center</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s7">100vh</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s7">0</span><span class="s1">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s4"> </span><span class="s1">var(--bg-gradient)</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s9">hidden</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s9">relative</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Visible Snowflakes */</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.snowflake</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s9">absolute</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">top:</span><span class="s1"> </span><span class="s7">-10%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">user-select:</span><span class="s1"> </span><span class="s9">none</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">0</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">pointer-events:</span><span class="s4"> </span><span class="s9">none</span><span class="s4">;</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s2">animation:</span><span class="s4"> </span><span class="s1">fall</span><span class="s4"> </span><span class="s1">linear</span><span class="s4"> </span><span class="s1">infinite</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">filter:</span><span class="s1"> </span><span class="s9">drop-shadow(</span><span class="s7">0</span><span class="s1"> </span><span class="s7">0</span><span class="s1"> </span><span class="s7">2px</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">255</span><span class="s1">,</span><span class="s7">255</span><span class="s1">,</span><span class="s7">255</span><span class="s1">,</span><span class="s7">0.8</span><span class="s9">))</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">@keyframes</span><span class="s1"> </span><span class="s9">fall</span><span class="s1"> {</span></p>
-<p class="p6"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">to</span><span class="s4"> { </span><span class="s2">transform:</span><span class="s4"> </span><span class="s1">translateY(</span><span class="s7">110vh</span><span class="s1">)</span><span class="s4"> </span><span class="s1">rotate(</span><span class="s7">360deg</span><span class="s1">)</span><span class="s4">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">h1</span><span class="s1"> {<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">#ffffff</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-bottom:</span><span class="s1"> </span><span class="s7">5px</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">10</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">text-shadow:</span><span class="s1"> </span><span class="s7">2px</span><span class="s1"> </span><span class="s7">2px</span><span class="s1"> </span><span class="s7">8px</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.5</span><span class="s9">)</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">#jar</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s7">300px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s7">420px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s7">6px</span><span class="s1"> </span><span class="s9">solid</span><span class="s1"> </span><span class="s9">#ffffff</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-bottom-left-radius:</span><span class="s4"> </span><span class="s7">60px</span><span class="s4">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">border-bottom-right-radius:</span><span class="s4"> </span><span class="s7">60px</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s9">relative</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">255</span><span class="s1">, </span><span class="s7">255</span><span class="s1">, </span><span class="s7">255</span><span class="s1">, </span><span class="s7">0.2</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">backdrop-filter:</span><span class="s4"> </span><span class="s9">blur(</span><span class="s7">8px</span><span class="s9">)</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s7">0</span><span class="s1"> </span><span class="s7">10px</span><span class="s1"> </span><span class="s7">40px</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.4</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s9">flex</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">flex-wrap:</span><span class="s1"> </span><span class="s9">wrap-reverse</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-content:</span><span class="s1"> </span><span class="s9">flex-start</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s7">15px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">5</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">overflow:</span><span class="s1"> </span><span class="s9">visible</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.item</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s7">52px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s7">52px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s7">3px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s9">pointer</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">50%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">object-fit:</span><span class="s1"> </span><span class="s9">cover</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">animation:</span><span class="s1"> </span><span class="s9">dropIn</span><span class="s1"> </span><span class="s7">0.8s</span><span class="s1"> </span><span class="s9">cubic-bezier(</span><span class="s7">0.25</span><span class="s1">, </span><span class="s7">0.46</span><span class="s1">, </span><span class="s7">0.45</span><span class="s1">, </span><span class="s7">0.94</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s7">2px</span><span class="s1"> </span><span class="s9">solid</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s7">0</span><span class="s1"> </span><span class="s7">4px</span><span class="s1"> </span><span class="s7">6px</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.3</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">@keyframes</span><span class="s1"> </span><span class="s9">dropIn</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">0%</span><span class="s1"> { </span><span class="s2">transform:</span><span class="s1"> </span><span class="s9">translateY(</span><span class="s7">-500px</span><span class="s9">)</span><span class="s1"> </span><span class="s9">rotate(</span><span class="s7">0deg</span><span class="s9">)</span><span class="s1">; </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s7">0</span><span class="s1">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s7">100%</span><span class="s1"> { </span><span class="s2">transform:</span><span class="s1"> </span><span class="s9">translateY(</span><span class="s7">0</span><span class="s9">)</span><span class="s1">; </span><span class="s2">opacity:</span><span class="s1"> </span><span class="s7">1</span><span class="s1">; }</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.controls</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s9">flex</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">gap:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">10</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">button</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s7">80px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s7">80px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">50%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s7">3px</span><span class="s1"> </span><span class="s9">solid</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s7">40px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s9">pointer</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">box-shadow:</span><span class="s1"> </span><span class="s7">0</span><span class="s1"> </span><span class="s7">5px</span><span class="s1"> </span><span class="s7">15px</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.4</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">transition:</span><span class="s1"> </span><span class="s9">transform</span><span class="s1"> </span><span class="s7">0.1s</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">button:active</span><span class="s1"> { </span><span class="s2">transform:</span><span class="s1"> </span><span class="s9">scale(</span><span class="s7">0.9</span><span class="s9">)</span><span class="s1">; }</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s6">.plus</span><span class="s4"> { </span><span class="s1">background-color:</span><span class="s4"> </span><span class="s9">#4CAF50</span><span class="s4">; }</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s6">.minus</span><span class="s4"> { </span><span class="s1">background-color:</span><span class="s4"> </span><span class="s9">#F44336</span><span class="s4">; }</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">#counter</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s7">24px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s7">10px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">bold</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">10</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.3</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s7">5px</span><span class="s1"> </span><span class="s7">15px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">/* Overlays */</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#overlay</span><span class="s4">, </span><span class="s1">#goal-overlay</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">display:</span><span class="s1"> </span><span class="s9">none</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">position:</span><span class="s1"> </span><span class="s9">fixed</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">top:</span><span class="s1"> </span><span class="s7">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">left:</span><span class="s1"> </span><span class="s7">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">width:</span><span class="s1"> </span><span class="s7">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">height:</span><span class="s1"> </span><span class="s7">100%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s9">rgba(</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0</span><span class="s1">,</span><span class="s7">0.95</span><span class="s9">)</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">z-index:</span><span class="s1"> </span><span class="s7">100</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">justify-content:</span><span class="s4"> </span><span class="s9">center</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">align-items:</span><span class="s1"> </span><span class="s9">center</span><span class="s1">;</span></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">flex-direction:</span><span class="s4"> </span><span class="s9">column</span><span class="s4">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">text-align:</span><span class="s1"> </span><span class="s9">center</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">.challenge-box</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s9">#fff</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">#333</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">15px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1"> </span><span class="s7">0</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s7">22px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s7">5px</span><span class="s1"> </span><span class="s9">solid</span><span class="s1"> </span><span class="s9">#FFD700</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">max-width:</span><span class="s1"> </span><span class="s7">85%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">#overlay</span><span class="s4"> </span><span class="s1">img</span><span class="s4">, </span><span class="s1">#goal-overlay</span><span class="s4"> </span><span class="s1">img</span><span class="s4"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">max-width:</span><span class="s1"> </span><span class="s7">90%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">max-height:</span><span class="s1"> </span><span class="s7">55%</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">15px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border:</span><span class="s1"> </span><span class="s7">4px</span><span class="s1"> </span><span class="s9">solid</span><span class="s1"> </span><span class="s9">white</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s6">.close-btn</span><span class="s1"> {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">margin-top:</span><span class="s1"> </span><span class="s7">20px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">padding:</span><span class="s1"> </span><span class="s7">15px</span><span class="s1"> </span><span class="s7">40px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">background:</span><span class="s1"> </span><span class="s9">#FFD700</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">color:</span><span class="s1"> </span><span class="s9">#000</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-weight:</span><span class="s1"> </span><span class="s9">bold</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">border-radius:</span><span class="s1"> </span><span class="s7">30px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">cursor:</span><span class="s1"> </span><span class="s9">pointer</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s2">font-size:</span><span class="s1"> </span><span class="s7">22px</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p3"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s6">.particle</span><span class="s4"> { </span><span class="s1">position:</span><span class="s4"> </span><span class="s9">absolute</span><span class="s4">; </span><span class="s1">pointer-events:</span><span class="s4"> </span><span class="s9">none</span><span class="s4">; </span><span class="s1">z-index:</span><span class="s4"> </span><span class="s7">15</span><span class="s4">; </span><span class="s1">font-size:</span><span class="s4"> </span><span class="s7">30px</span><span class="s4">; }</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">style</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">head</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">h1</span><span class="s3">&gt;</span><span class="s1">🌟 Noa's Good Point Jar 🌟</span><span class="s3">&lt;/</span><span class="s6">h1</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">    </span></span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s5">"jar"</span><span class="s3">&gt;&lt;/</span><span class="s1">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">id</span><span class="s3">=</span><span class="s5">"counter"</span><span class="s3">&gt;</span><span class="s1">Points: 0 / 28</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"controls"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"minus"</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"removeItem()"</span><span class="s3">&gt;</span><span class="s4">−</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">button</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"plus"</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"addItem()"</span><span class="s3">&gt;</span><span class="s4">+</span><span class="s3">&lt;/</span><span class="s6">button</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"overlay"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">img</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"zoomed-img"</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">""</span><span class="s4"> </span><span class="s2">alt</span><span class="s3">=</span><span class="s1">"Noa"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"close-btn"</span><span class="s4"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s1">"closeZoom()"</span><span class="s3">&gt;</span><span class="s4">CLOSE [X]</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"goal-overlay"</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">h2</span><span class="s4"> </span><span class="s2">style</span><span class="s3">=</span><span class="s1">"color:#FFD700; font-size: 40px; text-shadow: 0 0 10px orange;"</span><span class="s3">&gt;</span><span class="s4">28 POINTS! HOORAY!</span><span class="s3">&lt;/</span><span class="s6">h2</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">img</span><span class="s4"> </span><span class="s2">src</span><span class="s3">=</span><span class="s1">"https://media.tenor.com/S8E6PPrP_S8AAAAM/dance-kid.gif"</span><span class="s4"> </span><span class="s2">alt</span><span class="s3">=</span><span class="s1">"Funny Dance"</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s4"> </span><span class="s2">class</span><span class="s3">=</span><span class="s1">"challenge-box"</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">strong</span><span class="s1"> </span><span class="s2">style</span><span class="s3">=</span><span class="s5">"color: #1e3c72;"</span><span class="s3">&gt;</span><span class="s1">WINNER'S CHALLENGE:</span><span class="s3">&lt;/</span><span class="s6">strong</span><span class="s3">&gt;&lt;</span><span class="s6">br</span><span class="s3">&gt;</span></p>
-<p class="p4"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s3">&lt;</span><span class="s6">span</span><span class="s4"> </span><span class="s2">id</span><span class="s3">=</span><span class="s1">"challenge-text"</span><span class="s3">&gt;&lt;/</span><span class="s6">span</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s3">&lt;</span><span class="s6">div</span><span class="s1"> </span><span class="s2">class</span><span class="s3">=</span><span class="s5">"close-btn"</span><span class="s1"> </span><span class="s2">onclick</span><span class="s3">=</span><span class="s5">"resetJar()"</span><span class="s3">&gt;</span><span class="s1">START NEW JAR</span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s6">div</span><span class="s3">&gt;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> jar = document.getElementById(</span><span class="s10">'jar'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> counter = document.getElementById(</span><span class="s10">'counter'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> goalOverlay = document.getElementById(</span><span class="s10">'goal-overlay'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> challengeText = document.getElementById(</span><span class="s10">'challenge-text'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> </span><span class="s11">GOAL</span><span class="s1"> = </span><span class="s7">28</span><span class="s1">;</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">        </span></span><span class="s1">// Generate the list noa1.jpg to noa28.jpg</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">let</span><span class="s1"> availableImages = [];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">for</span><span class="s1"> (</span><span class="s5">let</span><span class="s1"> i = </span><span class="s7">1</span><span class="s1">; i &lt;= </span><span class="s7">28</span><span class="s1">; i++) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>availableImages.push(</span><span class="s10">`noa</span><span class="s1">${i}</span><span class="s10">.jpg`</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> challenges = [</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Do a 10-second silly dance!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Hop like a bunny 5 times!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Give someone a giant high-five!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Balance a pillow on your head for 10 seconds!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Spin around in a circle 3 times and shout 'HOORAY!'"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Act like a slow-motion robot for 20 seconds!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Make your best 'funny monkey' face!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Touch your toes and jump as high as you can!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Sing your favorite song in a funny voice!"</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">"Do 5 giant star jumps!"</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> cheerSounds = [</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3'</span><span class="s4">,</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">'https://assets.mixkit.co/active_storage/sfx/2017/2017-preview.mp3'</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">const</span><span class="s1"> booSounds = [</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">            </span></span><span class="s1">'https://assets.mixkit.co/active_storage/sfx/731/731-preview.mp3'</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>];</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> createSnow() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s5">for</span><span class="s1">(</span><span class="s5">let</span><span class="s1"> i=</span><span class="s7">0</span><span class="s1">; i&lt;</span><span class="s7">50</span><span class="s1">; i++) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">let</span><span class="s1"> s = document.createElement(</span><span class="s10">'div'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>s.className = </span><span class="s10">'snowflake'</span><span class="s1">; s.innerText = </span><span class="s10">'❄'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>s.style.left = </span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">100</span><span class="s1"> + </span><span class="s10">'vw'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>s.style.animationDuration = (</span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">3</span><span class="s1"> + </span><span class="s7">5</span><span class="s1">) + </span><span class="s10">'s'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>s.style.opacity = </span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">0.8</span><span class="s1"> + </span><span class="s7">0.2</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>s.style.fontSize = (</span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">12</span><span class="s1"> + </span><span class="s7">12</span><span class="s1">) + </span><span class="s10">'px'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>document.body.appendChild(s);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>createSnow();</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> addItem() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s5">if</span><span class="s1"> (jar.children.length &lt; </span><span class="s11">GOAL</span><span class="s1">) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">const</span><span class="s1"> img = document.createElement(</span><span class="s10">'img'</span><span class="s1">);</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Pick an image from the list</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">const</span><span class="s1"> index = </span><span class="s11">Math</span><span class="s1">.floor(</span><span class="s11">Math</span><span class="s1">.random() * availableImages.length);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">const</span><span class="s1"> src = availableImages[index];</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>img.src = src;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>img.className = </span><span class="s10">'item'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>img.onclick = () =&gt; {<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>document.getElementById(</span><span class="s10">'zoomed-img'</span><span class="s1">).src = src;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>document.getElementById(</span><span class="s10">'overlay'</span><span class="s1">).style.display=</span><span class="s10">'flex'</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>};</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Fallback if a specific number is missing</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                </span>img.onerror = </span><span class="s5">function</span><span class="s4">() { </span><span class="s5">this</span><span class="s4">.src = </span><span class="s1">'https://img.icons8.com/emoji/96/star-emoji.png'</span><span class="s4">; };</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>jar.appendChild(img);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>updateCounter();</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">                </span></span></p>
-<p class="p9"><span class="s4"><span class="Apple-converted-space">                </span></span><span class="s1">// Sound and Particles</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">new</span><span class="s1"> </span><span class="s11">Audio</span><span class="s1">(cheerSounds[</span><span class="s11">Math</span><span class="s1">.floor(</span><span class="s11">Math</span><span class="s1">.random() * cheerSounds.length)]).play();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>spawnParticles(</span><span class="s10">'🎉'</span><span class="s1">, </span><span class="s7">12</span><span class="s1">);</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">if</span><span class="s1"> (jar.children.length === </span><span class="s11">GOAL</span><span class="s1">) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>setTimeout(() =&gt; {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>challengeText.innerText = challenges[</span><span class="s11">Math</span><span class="s1">.floor(</span><span class="s11">Math</span><span class="s1">.random() * challenges.length)];</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>goalOverlay.style.display = </span><span class="s10">'flex'</span><span class="s1">;</span></p>
-<p class="p8"><span class="s4"><span class="Apple-converted-space">                        </span></span><span class="s5">new</span><span class="s4"> </span><span class="s11">Audio</span><span class="s4">(</span><span class="s1">'https://assets.mixkit.co/active_storage/sfx/1433/1433-preview.mp3'</span><span class="s4">).play();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                        </span>spawnParticles(</span><span class="s10">'⭐'</span><span class="s1">, </span><span class="s7">30</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>}, </span><span class="s7">800</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> removeItem() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s5">if</span><span class="s1"> (jar.lastChild) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>jar.removeChild(jar.lastChild);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>updateCounter();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">new</span><span class="s1"> </span><span class="s11">Audio</span><span class="s1">(booSounds[</span><span class="s7">0</span><span class="s1">]).play();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>spawnParticles(</span><span class="s10">'😢'</span><span class="s1">, </span><span class="s7">8</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> updateCounter() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>counter.innerText = </span><span class="s10">`Points: </span><span class="s1">${jar.children.length}</span><span class="s10"> / </span><span class="s1">${</span><span class="s11">GOAL</span><span class="s1">}</span><span class="s10">`</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> closeZoom() { document.getElementById(</span><span class="s10">'overlay'</span><span class="s1">).style.display = </span><span class="s10">'none'</span><span class="s1">; }</span></p>
-<p class="p7"><span class="s1"><span class="Apple-converted-space">        </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> resetJar() {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>jar.innerHTML = </span><span class="s10">''</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>updateCounter();</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>goalOverlay.style.display = </span><span class="s10">'none'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p7"><span class="s8"></span><br></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span></span><span class="s5">function</span><span class="s1"> spawnParticles(char, count) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span></span><span class="s5">for</span><span class="s1">(</span><span class="s5">let</span><span class="s1"> i=</span><span class="s7">0</span><span class="s1">; i&lt;count; i++) {</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span></span><span class="s5">const</span><span class="s1"> p = document.createElement(</span><span class="s10">'div'</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>p.className = </span><span class="s10">'particle'</span><span class="s1">; p.innerText = char;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>p.style.left = </span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">100</span><span class="s1"> + </span><span class="s10">'vw'</span><span class="s1">; p.style.top = </span><span class="s10">'-50px'</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>p.style.transition = </span><span class="s10">`all </span><span class="s1">${</span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">2</span><span class="s1"> + </span><span class="s7">1.5</span><span class="s1">}</span><span class="s10">s linear`</span><span class="s1">;</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>document.body.appendChild(p);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; {<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>p.style.transform = </span><span class="s10">`translateY(110vh) rotate(</span><span class="s1">${</span><span class="s11">Math</span><span class="s1">.random() * </span><span class="s7">360</span><span class="s1">}</span><span class="s10">deg)`</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                    </span>p.style.opacity = </span><span class="s10">'0'</span><span class="s1">;<span class="Apple-converted-space"> </span></span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>}, </span><span class="s7">10</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">                </span>setTimeout(() =&gt; p.remove(), </span><span class="s7">3500</span><span class="s1">);</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">            </span>}</span></p>
-<p class="p5"><span class="s1"><span class="Apple-converted-space">        </span>}</span></p>
-<p class="p2"><span class="s4"><span class="Apple-converted-space">    </span></span><span class="s3">&lt;/</span><span class="s1">script</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">body</span><span class="s3">&gt;</span></p>
-<p class="p2"><span class="s3">&lt;/</span><span class="s1">html</span><span class="s3">&gt;</span></p>
+
+    <h1>🌟 Noa's Good Point Jar 🌟</h1>
+    
+    <div id="jar"></div>
+    <div id="counter">Points: 0 / 28</div>
+
+    <div class="controls">
+        <button class="minus" onclick="removeItem()">−</button>
+        <button class="plus" onclick="addItem()">+</button>
+    </div>
+
+    <div id="overlay">
+        <img id="zoomed-img" src="" alt="Noa">
+        <div class="close-btn" onclick="closeZoom()">CLOSE [X]</div>
+    </div>
+
+    <div id="goal-overlay">
+        <h2 style="color:#FFD700; font-size: 40px; text-shadow: 0 0 10px orange;">28 POINTS! HOORAY!</h2>
+        <img src="https://media.tenor.com/S8E6PPrP_S8AAAAM/dance-kid.gif" alt="Funny Dance">
+        
+        <div class="challenge-box">
+            <strong style="color: #1e3c72;">WINNER'S CHALLENGE:</strong><br>
+            <span id="challenge-text"></span>
+        </div>
+        
+        <div class="close-btn" onclick="resetJar()">START NEW JAR</div>
+    </div>
+
+    <script>
+        const jar = document.getElementById('jar');
+        const counter = document.getElementById('counter');
+        const goalOverlay = document.getElementById('goal-overlay');
+        const challengeText = document.getElementById('challenge-text');
+        const GOAL = 28;
+
+        // Generate the list noa1.jpg to noa28.jpg
+        let availableImages = [];
+        for (let i = 1; i <= 28; i++) {
+            availableImages.push(`noa${i}.jpg`);
+        }
+
+        const challenges = [
+            "Do a 10-second silly dance!",
+            "Hop like a bunny 5 times!",
+            "Give someone a giant high-five!",
+            "Balance a pillow on your head for 10 seconds!",
+            "Spin around in a circle 3 times and shout 'HOORAY!'",
+            "Act like a slow-motion robot for 20 seconds!",
+            "Make your best 'funny monkey' face!",
+            "Touch your toes and jump as high as you can!",
+            "Sing your favorite song in a funny voice!",
+            "Do 5 giant star jumps!"
+        ];
+
+        const cheerSounds = [
+            'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3',
+            'https://assets.mixkit.co/active_storage/sfx/2017/2017-preview.mp3'
+        ];
+
+        const booSounds = [
+            'https://assets.mixkit.co/active_storage/sfx/731/731-preview.mp3'
+        ];
+
+        function createSnow() {
+            for(let i=0; i<50; i++) {
+                let s = document.createElement('div');
+                s.className = 'snowflake'; s.innerText = '❄';
+                s.style.left = Math.random() * 100 + 'vw';
+                s.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                s.style.opacity = Math.random() * 0.8 + 0.2;
+                s.style.fontSize = (Math.random() * 12 + 12) + 'px';
+                document.body.appendChild(s);
+            }
+        }
+        createSnow();
+
+        function addItem() {
+            if (jar.children.length < GOAL) {
+                const img = document.createElement('img');
+                
+                // Pick an image from the list
+                const index = Math.floor(Math.random() * availableImages.length);
+                const src = availableImages[index];
+                
+                img.src = src; 
+                img.className = 'item';
+                img.onclick = () => { 
+                    document.getElementById('zoomed-img').src = src; 
+                    document.getElementById('overlay').style.display='flex'; 
+                };
+                
+                // Fallback if a specific number is missing
+                img.onerror = function() { this.src = 'https://img.icons8.com/emoji/96/star-emoji.png'; };
+                
+                jar.appendChild(img);
+                updateCounter();
+                
+                // Sound and Particles
+                new Audio(cheerSounds[Math.floor(Math.random() * cheerSounds.length)]).play();
+                spawnParticles('🎉', 12);
+
+                if (jar.children.length === GOAL) {
+                    setTimeout(() => {
+                        challengeText.innerText = challenges[Math.floor(Math.random() * challenges.length)];
+                        goalOverlay.style.display = 'flex';
+                        new Audio('https://assets.mixkit.co/active_storage/sfx/1433/1433-preview.mp3').play();
+                        spawnParticles('⭐', 30);
+                    }, 800);
+                }
+            }
+        }
+
+        function removeItem() {
+            if (jar.lastChild) {
+                jar.removeChild(jar.lastChild);
+                updateCounter();
+                new Audio(booSounds[0]).play();
+                spawnParticles('😢', 8);
+            }
+        }
+
+        function updateCounter() {
+            counter.innerText = `Points: ${jar.children.length} / ${GOAL}`;
+        }
+
+        function closeZoom() { document.getElementById('overlay').style.display = 'none'; }
+        
+        function resetJar() {
+            jar.innerHTML = '';
+            updateCounter();
+            goalOverlay.style.display = 'none';
+        }
+
+        function spawnParticles(char, count) {
+            for(let i=0; i<count; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle'; p.innerText = char;
+                p.style.left = Math.random() * 100 + 'vw'; p.style.top = '-50px';
+                p.style.transition = `all ${Math.random() * 2 + 1.5}s linear`;
+                document.body.appendChild(p);
+                setTimeout(() => { 
+                    p.style.transform = `translateY(110vh) rotate(${Math.random() * 360}deg)`; 
+                    p.style.opacity = '0'; 
+                }, 10);
+                setTimeout(() => p.remove(), 3500);
+            }
+        }
+    </script>
 </body>
 </html>
