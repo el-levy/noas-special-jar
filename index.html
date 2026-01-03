@@ -43,11 +43,12 @@
             z-index: 10; 
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5); 
             transition: all 0.5s ease;
+            text-align: center;
         }
 
         #jar {
-            width: 300px;
-            height: 420px;
+            width: 320px;
+            height: 440px;
             border: 6px solid #ffffff;
             border-bottom-left-radius: 60px;
             border-bottom-right-radius: 60px;
@@ -64,15 +65,16 @@
         }
 
         .item {
-            width: 52px;
-            height: 52px;
-            margin: 3px;
+            /* Increased size from 52px to 70px to fill the jar faster */
+            width: 70px;
+            height: 70px;
+            margin: 4px;
             cursor: pointer;
             border-radius: 50%;
             object-fit: cover;
             animation: dropIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            border: 2px solid white;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border: 3px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         }
 
         @keyframes dropIn {
@@ -174,7 +176,7 @@
     <h1 id="main-title">🌟 Noa's Good Point Jar 🌟</h1>
     
     <div id="jar"></div>
-    <div id="counter">Points: 0 / 28</div>
+    <div id="counter">Points: 0 / 16</div>
 
     <div class="controls">
         <button class="minus" onclick="removeItem()">−</button>
@@ -209,7 +211,7 @@
         const goalOverlay = document.getElementById('goal-overlay');
         const challengeText = document.getElementById('challenge-text');
         const noaVideo = document.getElementById('noa-video');
-        const GOAL = 28;
+        const GOAL = 16; // Updated Goal
 
         const challenges = [
             "Do a 10-second silly dance!",
@@ -222,7 +224,6 @@
             "Do 5 giant star jumps!"
         ];
 
-        // Specific Sounds
         const applauseSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2017/2017-preview.mp3'); 
         const booSound = new Audio('https://assets.mixkit.co/active_storage/sfx/731/731-preview.mp3');
 
@@ -256,24 +257,16 @@
                 jar.appendChild(img);
                 updateCounter();
                 
-                // Play Applause Sound
                 applauseSound.currentTime = 0;
                 applauseSound.play();
-                
                 spawnParticles('🎉', 12);
 
                 if (jar.children.length === GOAL) {
                     setTimeout(() => {
-                        // Change Title
                         mainTitle.innerText = "Noa you made it, you are flying!";
                         mainTitle.style.color = "#FFD700";
-                        mainTitle.style.fontSize = "40px";
-
-                        // Show Video Overlay
                         challengeText.innerText = challenges[Math.floor(Math.random() * challenges.length)];
                         goalOverlay.style.display = 'flex';
-                        
-                        // Start Video
                         noaVideo.play();
                     }, 800);
                 }
@@ -302,10 +295,8 @@
             goalOverlay.style.display = 'none';
             noaVideo.pause();
             noaVideo.currentTime = 0;
-            // Reset title
             mainTitle.innerText = "🌟 Noa's Good Point Jar 🌟";
             mainTitle.style.color = "#ffffff";
-            mainTitle.style.fontSize = "32px";
         }
 
         function spawnParticles(char, count) {
