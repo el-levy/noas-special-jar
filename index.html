@@ -1,3 +1,13 @@
+This makes perfect sense! It will be like a countdown or a journey through her photos as she earns her points.
+
+I have updated the logic so that it always adds the **next photo in the sequence**.
+
+* Point 1 = `noa1.jpg`
+* Point 2 = `noa2.jpg`
+* ...and so on until Point 28 = `noa28.jpg`.
+* If you remove a point, the sequence goes back one step so the next "+" will show that same photo again.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +32,6 @@
             position: relative;
         }
 
-        /* Visible Snowflakes */
         .snowflake {
             position: absolute;
             top: -10%;
@@ -114,7 +123,6 @@
             border-radius: 20px;
         }
 
-        /* Overlays */
         #overlay, #goal-overlay {
             display: none;
             position: fixed;
@@ -182,7 +190,7 @@
     </div>
 
     <div id="goal-overlay">
-        <h2 style="color:#FFD700; font-size: 40px; text-shadow: 0 0 10px orange;">28 POINTS! HOORAY!</h2>
+        <h2 style="color:#FFD700; font-size: 40px;">28 POINTS! HOORAY!</h2>
         <img src="https://media.tenor.com/S8E6PPrP_S8AAAAM/dance-kid.gif" alt="Funny Dance">
         
         <div class="challenge-box">
@@ -200,12 +208,6 @@
         const challengeText = document.getElementById('challenge-text');
         const GOAL = 28;
 
-        // Generate the list noa1.jpg to noa28.jpg
-        let availableImages = [];
-        for (let i = 1; i <= 28; i++) {
-            availableImages.push(`noa${i}.jpg`);
-        }
-
         const challenges = [
             "Do a 10-second silly dance!",
             "Hop like a bunny 5 times!",
@@ -214,9 +216,7 @@
             "Spin around in a circle 3 times and shout 'HOORAY!'",
             "Act like a slow-motion robot for 20 seconds!",
             "Make your best 'funny monkey' face!",
-            "Touch your toes and jump as high as you can!",
-            "Sing your favorite song in a funny voice!",
-            "Do 5 giant star jumps!"
+            "Touch your toes and jump as high as you can!"
         ];
 
         const cheerSounds = [
@@ -234,21 +234,19 @@
                 s.className = 'snowflake'; s.innerText = '❄';
                 s.style.left = Math.random() * 100 + 'vw';
                 s.style.animationDuration = (Math.random() * 3 + 5) + 's';
-                s.style.opacity = Math.random() * 0.8 + 0.2;
-                s.style.fontSize = (Math.random() * 12 + 12) + 'px';
                 document.body.appendChild(s);
             }
         }
         createSnow();
 
         function addItem() {
-            if (jar.children.length < GOAL) {
+            const currentPoints = jar.children.length;
+            if (currentPoints < GOAL) {
+                // SEQUENTIAL LOGIC: Next point uses next number
+                const nextNumber = currentPoints + 1;
+                const src = `noa${nextNumber}.jpg`;
+                
                 const img = document.createElement('img');
-                
-                // Pick an image from the list
-                const index = Math.floor(Math.random() * availableImages.length);
-                const src = availableImages[index];
-                
                 img.src = src; 
                 img.className = 'item';
                 img.onclick = () => { 
@@ -256,13 +254,11 @@
                     document.getElementById('overlay').style.display='flex'; 
                 };
                 
-                // Fallback if a specific number is missing
                 img.onerror = function() { this.src = 'https://img.icons8.com/emoji/96/star-emoji.png'; };
                 
                 jar.appendChild(img);
                 updateCounter();
                 
-                // Sound and Particles
                 new Audio(cheerSounds[Math.floor(Math.random() * cheerSounds.length)]).play();
                 spawnParticles('🎉', 12);
 
@@ -271,7 +267,6 @@
                         challengeText.innerText = challenges[Math.floor(Math.random() * challenges.length)];
                         goalOverlay.style.display = 'flex';
                         new Audio('https://assets.mixkit.co/active_storage/sfx/1433/1433-preview.mp3').play();
-                        spawnParticles('⭐', 30);
                     }, 800);
                 }
             }
@@ -315,3 +310,5 @@
     </script>
 </body>
 </html>
+
+```
