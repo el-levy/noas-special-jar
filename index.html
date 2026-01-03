@@ -1,13 +1,3 @@
-This makes perfect sense! It will be like a countdown or a journey through her photos as she earns her points.
-
-I have updated the logic so that it always adds the **next photo in the sequence**.
-
-* Point 1 = `noa1.jpg`
-* Point 2 = `noa2.jpg`
-* ...and so on until Point 28 = `noa28.jpg`.
-* If you remove a point, the sequence goes back one step so the next "+" will show that same photo again.
-
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,6 +42,7 @@ I have updated the logic so that it always adds the **next photo in the sequence
             margin-bottom: 5px; 
             z-index: 10; 
             text-shadow: 2px 2px 8px rgba(0,0,0,0.5); 
+            transition: all 0.5s ease;
         }
 
         #jar {
@@ -105,10 +96,8 @@ I have updated the logic so that it always adds the **next photo in the sequence
             color: white;
             cursor: pointer;
             box-shadow: 0 5px 15px rgba(0,0,0,0.4);
-            transition: transform 0.1s;
         }
 
-        button:active { transform: scale(0.9); }
         .plus { background-color: #4CAF50; }
         .minus { background-color: #F44336; }
 
@@ -140,33 +129,41 @@ I have updated the logic so that it always adds the **next photo in the sequence
             text-align: center;
         }
 
+        #noa-video {
+            width: 90%;
+            max-width: 500px;
+            border-radius: 15px;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
         .challenge-box {
             background: #fff;
             color: #333;
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
-            margin: 20px 0;
-            font-size: 22px;
+            margin: 15px 0;
+            font-size: 20px;
             border: 5px solid #FFD700;
             max-width: 85%;
         }
 
-        #overlay img, #goal-overlay img {
+        #overlay img {
             max-width: 90%;
-            max-height: 55%;
+            max-height: 70%;
             border-radius: 15px;
             border: 4px solid white;
         }
 
         .close-btn {
-            margin-top: 20px;
-            padding: 15px 40px;
+            margin-top: 10px;
+            padding: 12px 35px;
             background: #FFD700;
             color: #000;
             font-weight: bold;
             border-radius: 30px;
             cursor: pointer;
-            font-size: 22px;
+            font-size: 20px;
         }
 
         .particle { position: absolute; pointer-events: none; z-index: 15; font-size: 30px; }
@@ -174,7 +171,7 @@ I have updated the logic so that it always adds the **next photo in the sequence
 </head>
 <body>
 
-    <h1>🌟 Noa's Good Point Jar 🌟</h1>
+    <h1 id="main-title">🌟 Noa's Good Point Jar 🌟</h1>
     
     <div id="jar"></div>
     <div id="counter">Points: 0 / 28</div>
@@ -190,11 +187,15 @@ I have updated the logic so that it always adds the **next photo in the sequence
     </div>
 
     <div id="goal-overlay">
-        <h2 style="color:#FFD700; font-size: 40px;">28 POINTS! HOORAY!</h2>
-        <img src="https://media.tenor.com/S8E6PPrP_S8AAAAM/dance-kid.gif" alt="Funny Dance">
+        <h2 style="color:#FFD700; font-size: 32px; margin-bottom: 15px;">🎉 MISSION ACCOMPLISHED! 🎉</h2>
+        
+        <video id="noa-video" controls>
+            <source src="noa.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
         
         <div class="challenge-box">
-            <strong style="color: #1e3c72;">WINNER'S CHALLENGE:</strong><br>
+            <strong style="color: #1e3c72;">YOUR CHALLENGE:</strong><br>
             <span id="challenge-text"></span>
         </div>
         
@@ -204,8 +205,10 @@ I have updated the logic so that it always adds the **next photo in the sequence
     <script>
         const jar = document.getElementById('jar');
         const counter = document.getElementById('counter');
+        const mainTitle = document.getElementById('main-title');
         const goalOverlay = document.getElementById('goal-overlay');
         const challengeText = document.getElementById('challenge-text');
+        const noaVideo = document.getElementById('noa-video');
         const GOAL = 28;
 
         const challenges = [
@@ -216,20 +219,15 @@ I have updated the logic so that it always adds the **next photo in the sequence
             "Spin around in a circle 3 times and shout 'HOORAY!'",
             "Act like a slow-motion robot for 20 seconds!",
             "Make your best 'funny monkey' face!",
-            "Touch your toes and jump as high as you can!"
+            "Do 5 giant star jumps!"
         ];
 
-        const cheerSounds = [
-            'https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3',
-            'https://assets.mixkit.co/active_storage/sfx/2017/2017-preview.mp3'
-        ];
-
-        const booSounds = [
-            'https://assets.mixkit.co/active_storage/sfx/731/731-preview.mp3'
-        ];
+        // Specific Sounds
+        const applauseSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2017/2017-preview.mp3'); 
+        const booSound = new Audio('https://assets.mixkit.co/active_storage/sfx/731/731-preview.mp3');
 
         function createSnow() {
-            for(let i=0; i<50; i++) {
+            for(let i=0; i<45; i++) {
                 let s = document.createElement('div');
                 s.className = 'snowflake'; s.innerText = '❄';
                 s.style.left = Math.random() * 100 + 'vw';
@@ -242,7 +240,6 @@ I have updated the logic so that it always adds the **next photo in the sequence
         function addItem() {
             const currentPoints = jar.children.length;
             if (currentPoints < GOAL) {
-                // SEQUENTIAL LOGIC: Next point uses next number
                 const nextNumber = currentPoints + 1;
                 const src = `noa${nextNumber}.jpg`;
                 
@@ -259,14 +256,25 @@ I have updated the logic so that it always adds the **next photo in the sequence
                 jar.appendChild(img);
                 updateCounter();
                 
-                new Audio(cheerSounds[Math.floor(Math.random() * cheerSounds.length)]).play();
+                // Play Applause Sound
+                applauseSound.currentTime = 0;
+                applauseSound.play();
+                
                 spawnParticles('🎉', 12);
 
                 if (jar.children.length === GOAL) {
                     setTimeout(() => {
+                        // Change Title
+                        mainTitle.innerText = "Noa you made it, you are flying!";
+                        mainTitle.style.color = "#FFD700";
+                        mainTitle.style.fontSize = "40px";
+
+                        // Show Video Overlay
                         challengeText.innerText = challenges[Math.floor(Math.random() * challenges.length)];
                         goalOverlay.style.display = 'flex';
-                        new Audio('https://assets.mixkit.co/active_storage/sfx/1433/1433-preview.mp3').play();
+                        
+                        // Start Video
+                        noaVideo.play();
                     }, 800);
                 }
             }
@@ -276,7 +284,8 @@ I have updated the logic so that it always adds the **next photo in the sequence
             if (jar.lastChild) {
                 jar.removeChild(jar.lastChild);
                 updateCounter();
-                new Audio(booSounds[0]).play();
+                booSound.currentTime = 0;
+                booSound.play();
                 spawnParticles('😢', 8);
             }
         }
@@ -291,6 +300,12 @@ I have updated the logic so that it always adds the **next photo in the sequence
             jar.innerHTML = '';
             updateCounter();
             goalOverlay.style.display = 'none';
+            noaVideo.pause();
+            noaVideo.currentTime = 0;
+            // Reset title
+            mainTitle.innerText = "🌟 Noa's Good Point Jar 🌟";
+            mainTitle.style.color = "#ffffff";
+            mainTitle.style.fontSize = "32px";
         }
 
         function spawnParticles(char, count) {
@@ -310,5 +325,3 @@ I have updated the logic so that it always adds the **next photo in the sequence
     </script>
 </body>
 </html>
-
-```
